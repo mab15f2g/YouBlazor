@@ -1,16 +1,55 @@
+@using System.Diagnostics;
 @page "/counter"
 
-<h1>Counter</h1>
+<p>Link: @linkToVideo </p>
+<input @bind = "inputLink" / >
 
-<p>Current count: @currentCount</p>
-
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button class="btn btn-primary" @onclick="LauchDownlod">Click me</button>
 
 @code {
-    private int currentCount = 0;
+    
 
-    private void IncrementCount()
+    private string inputLink = "";
+    private string linkToVideo = "";
+
+    
+    
+    
+    private void Download()
     {
-        currentCount++;
+        linkToVideo = inputLink;
+
     }
+
+    private void LauchDownlod()
+    {
+        // For the example
+        // startInfo.Arguments = "-f j -o \"" + ex1 + "\" -z 1.0 -s y " + ex2;
+        //const string ex1 = "C:\\";
+        // const string ex2 = "C:\\Dir";
+
+
+        // Use ProcessStartInfo class
+        ProcessStartInfo startInfo = new ProcessStartInfo();
+        startInfo.CreateNoWindow = false;
+        startInfo.UseShellExecute = false;
+        startInfo.FileName = "notepad.exe";
+        //startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+        startInfo.Arguments = "";
+
+        try
+        {
+            // Start the process with the info we specified.
+            // Call WaitForExit and then the using statement will close.
+            using (Process exeProcess = Process.Start(startInfo))
+            {
+                exeProcess.WaitForExit();
+            }
+        }
+        catch
+        {
+             // Log error.
+        }
+    }
+
 }
