@@ -15,6 +15,13 @@
 </select>
 </p>
 
+<br />
+<br />
+<p>
+<input type="range" min="128" max="320" step="1" @bind="@bitrate" />
+<p>Bitrate: @bitrate</p>
+</p>
+
 
 
 @code {  
@@ -22,6 +29,7 @@
     private string inputLink = "";
     private string linkToVideo = "";
     private string selectedFormat = "";
+    private int bitrate = 128;
 
     List<string> arguments = new List<string>();   
     
@@ -33,6 +41,7 @@
         if (true)
         {
             arguments.Add(selectedFormat);
+            arguments.Add(bitrate.ToString());
         }
         
         linkToVideo = String.Join(" ", arguments.ToArray());
