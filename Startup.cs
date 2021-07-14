@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using YouBlazor.Data;
+using MudBlazor.Services;
 
 namespace YouBlazor
 {
@@ -27,6 +28,7 @@ namespace YouBlazor
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddMudServices();
             services.AddSingleton<WeatherForecastService>();
         }
 

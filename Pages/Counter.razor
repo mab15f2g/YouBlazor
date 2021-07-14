@@ -1,16 +1,18 @@
 @using System.Diagnostics;
 @page "/counter"
 
+
+
 <p>Link: @linkToVideo </p>
 <input @bind = "inputLink" / >
-<button class="btn btn-primary" @onclick="Download">Download</button>
+
 
 <br />
 <br />
 <p>
 <select class="d-flex" @bind="selectedFormat">
     <option value="">select Format</option>
-    <option value="-mp3">Audio(mp3)</option>
+    <option value=" -x -mp3">Audio(mp3)</option>
     <option value="-mp4">Video(mp4)</option>
 </select>
 </p>
@@ -18,16 +20,20 @@
 <br />
 <br />
 <p>
+<MudSlider @bind-Value="@bitrate" Min="20" Max="80" Color="Color.Info">Value: @bitrate.ToString()</MudSlider>
 <input type="range" min="128" max="320" step="1" @bind="@bitrate" />
 <p>Bitrate: @bitrate</p>
 </p>
-
+<p>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="Download">Download</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="testLaunch">LauchDownload</MudButton>
+</p>
 
 
 @code {  
 
     private string inputLink = "";
-    private string linkToVideo = "";
+    private string linkToVideo =  "";
     private string selectedFormat = "";
     private int bitrate = 128;
 
@@ -35,21 +41,22 @@
     
     
     private void Download()
-    {        
-        
-        arguments.Add(inputLink.ToString());
-        if (true)
-        {
-            arguments.Add(selectedFormat);
-            arguments.Add(bitrate.ToString());
-        }
-        
+    {               
+        arguments.Add(selectedFormat);
+        arguments.Add(bitrate.ToString());   
+        arguments.Add(inputLink.ToString()); 
         linkToVideo = String.Join(" ", arguments.ToArray());
 
     }
 
-    private void LauchDownlod()
+    private void testLaunch()
     {
+         Process.Start("youtube-dl.exe","-x  https://www.youtube.com/watch?v=QoDESU7aM_o");
+    }
+
+    private void LauchDownload()
+    {
+        
         // For the example
         // startInfo.Arguments = "-f j -o \"" + ex1 + "\" -z 1.0 -s y " + ex2;
         //const string ex1 = "C:\\";
@@ -59,10 +66,10 @@
         // Use ProcessStartInfo class
         ProcessStartInfo startInfo = new ProcessStartInfo();
         startInfo.CreateNoWindow = false;
-        startInfo.UseShellExecute = false;
-        startInfo.FileName = "notepad.exe";
+        startInfo.UseShellExecute = true;
+        startInfo.FileName = "youtube-dl.exe";
         //startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-        startInfo.Arguments = "";
+        startInfo.Arguments = "-x -mp3 259 https://www.youtube.com/watch?v=QoDESU7aM_o";
 
         try
         {
